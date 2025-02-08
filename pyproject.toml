@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "venv-meli"
+version = "0.1.0"
+description = ""
+authors = ["Jorge Robledo <robledo.11@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.11"
+polars = {version = "*", extras = ["gpu"]}
+cudf-cu12 = {version = "24.12.*", source = "nvidia"}
+cudf-polars-cu12 = {version = "*", source = "nvidia"}
+altair = "^5.5.0"
+vegafusion-python-embed = "^1.6.9"
+vegafusion = "^2.0.1"
+vl-convert-python = "^1.7.0"
+scikit-learn = "^1.6.1"
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.1.1"
+
+[[tool.poetry.source]]
+name = "nvidia"
+url = "https://pypi.nvidia.com"
+priority = "supplemental"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
