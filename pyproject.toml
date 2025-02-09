@@ -13,6 +13,7 @@ cudf-polars-cu12 = {version = "*", source = "nvidia"}
 scikit-learn = "^1.6.1"
 matplotlib = "^3.10.0"
 seaborn = "^0.13.2"
+empiricaldist = "^0.8.0"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
