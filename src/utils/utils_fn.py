@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import empiricaldist
 import yaml
+import json
 sns.set_theme(context='notebook', style=plt.style.use('dark_background')) # type: ignore
 
 
@@ -391,7 +392,114 @@ def categoricals_hue_target(data: pd.DataFrame, variables: list, target: str) ->
         plt.yticks(fontsize=12)
         plt.grid(color='white', linestyle='-', linewidth=0.1)
         plt.tight_layout()
+
+
+def gather_variable_info(
+    X: pd.DataFrame,
+    continuous: list = None,
+    categoricals: list = None,
+    discretes: list = None,
+    missing_threshold: float = 0.05,
+    cardinality_threshold: int = 5
+) -> dict[str, list[str]]:
+    """
+    Recolecta información de las variables de un DataFrame en relación con
+    el porcentaje de valores faltantes y la cardinalidad de variables categóricas/discretas.
+
+    Parámetros:
+    -----------
+    X : pd.DataFrame
+        DataFrame con los datos de entrenamiento.
+    continuous : list, opcional
+        Lista de variables continuas. Si es None, no se procesan.
+    categoricals : list, opcional
+        Lista de variables categóricas. Si es None, no se procesan.
+    discretes : list, opcional
+        Lista de variables discretas. Si es None, no se procesan.
+    missing_threshold : float, opcional
+        Porcentaje de valores faltantes a partir del cual se considera "alto" el missing.
+        Por defecto, 0.05 (5%).
+    cardinality_threshold : int, opcional
+        Valor mínimo de unique para considerar una variable como "alta cardinalidad".
+        Por defecto, 5.
+
+    Retorna:
+    --------
+    dict
+        Diccionario que contiene varias llaves con listas de variables clasificadas
+        según el porcentaje de valores faltantes y la cardinalidad.
+    """
+    results = dict()
+
+    # --- Variables continuas ---
+    if continuous is not None:
+        continuous_more_than_threshold = [
+            var for var in continuous
+            if X[var].isnull().mean() > missing_threshold
+        ]
+        continuous_less_than_threshold = [
+            var for var in continuous
+            if X[var].isnull().mean() > 0 and X[var].isnull().mean() <= missing_threshold
+        ]
+
+        results['continuous_more_than_threshold'] = continuous_more_than_threshold
+        results['continuous_less_than_threshold'] = continuous_less_than_threshold
+
+    # --- Variables categóricas ---
+    if categoricals is not None:
+        categoricals_more_than_threshold = [
+            var for var in categoricals
+            if X[var].isnull().mean() > missing_threshold
+        ]
+        categoricals_less_than_threshold = [
+            var for var in categoricals
+            if X[var].isnull().mean() > 0 and X[var].isnull().mean() <= missing_threshold
+        ]
+
+        # Dividir en alta y baja cardinalidad
+        categoricals_high_cardinality = [
+            var for var in categoricals
+            if X[var].nunique() > cardinality_threshold
+        ]
+        categoricals_low_cardinality = [
+            var for var in categoricals
+            if var not in categoricals_high_cardinality
+        ]
+
+        results['categoricals_more_than_threshold'] = categoricals_more_than_threshold
+        results['categoricals_less_than_threshold'] = categoricals_less_than_threshold
+        results['categoricals_high_cardinality'] = categoricals_high_cardinality
+        results['categoricals_low_cardinality'] = categoricals_low_cardinality
+
+    # --- Variables discretas ---
+    if discretes is not None:
+        discretes_more_than_threshold = [
+            var for var in discretes
+            if X[var].isnull().mean() > missing_threshold
+        ]
+        discretes_less_than_threshold = [
+            var for var in discretes
+            if X[var].isnull().mean() > 0 and X[var].isnull().mean() <= missing_threshold
+        ]
+
+        # Dividir en alta y baja cardinalidad
+        discretes_high_cardinality = [
+            var for var in discretes
+            if X[var].nunique() > cardinality_threshold
+        ]
+        discretes_low_cardinality = [
+            var for var in discretes
+            if var not in discretes_high_cardinality
+        ]
+
+        results['discretes_more_than_threshold'] = discretes_more_than_threshold
+        results['discretes_less_than_threshold'] = discretes_less_than_threshold
+        results['discretes_high_cardinality'] = discretes_high_cardinality
+        results['discretes_low_cardinality'] = discretes_low_cardinality
     
+    print(json.dumps(results, indent=4, ensure_ascii=False))
+    return results
+
 
 # Curva ROC
 def roc_curve_plot(model, X_val:pd.DataFrame, y_val:pd.Series):
