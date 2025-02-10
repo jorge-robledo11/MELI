@@ -1,0 +1,18 @@
+[pipeline-feature-selection]
+high_cardinality_from_eda = [ "title", "city",]
+categoricals_more_than_threshold = [ "attribute_group_id", "attribute_group", "attribute_id",]
+categoricals_less_than_threshold = [ "state", "city",]
+categoricals_high_cardinality = [ "state", "city", "listing_type", "attribute_group_id", "attribute_group", "attribute_id", "title",]
+categoricals_low_cardinality = [ "local_pickup", "free_shipping", "shipping_mode", "buying_mode", "status", "accepts_mercadopago", "currency", "automatic_relist",]
+
+[pipeline-feature-engineering]
+categoricals_less_than_threshold = [ "state",]
+categoricals_high_cardinality = [ "state", "listing_type",]
+categoricals_low_cardinality = [ "local_pickup", "shipping_mode",]
+
+[xgb-params]
+objective = "binary:logistic"
+eta = 0.1
+eval_metric = [ "auc", "logloss",]
+seed = 25
+device = "cuda"
