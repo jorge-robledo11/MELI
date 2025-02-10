@@ -19,6 +19,8 @@ feature-engine = "^1.8.3"
 xgboost = "^2.1.4"
 pydantic = "^2.10.6"
 pydantic-settings = "^2.7.1"
+optuna = "^4.2.0"
+optuna-integration = {extras = ["mlflow"], version = "^4.2.1"}
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
