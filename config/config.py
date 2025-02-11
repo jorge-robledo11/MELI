@@ -11,5 +11,6 @@ class Settings(BaseSettings):
     EXPERIMENTS_DIR: Path = BASE_DIR / 'mlruns'
     LOGS_DIR: Path = BASE_DIR / 'logs'
     MLFLOW_TRACKING_URI: str = f'file://{EXPERIMENTS_DIR}'
+    RESULTS_DIR: Path = BASE_DIR / 'results'
 
 settings = Settings()
