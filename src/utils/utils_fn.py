@@ -18,7 +18,7 @@ sns.set_theme(context='notebook', style=plt.style.use('dark_background')) # type
 
 
 # Función para cargar el YAML
-def load_features_names(yaml_path: str) -> dict:
+def load_features_names(yaml_path: str) -> dict[str, str]:
     with open(yaml_path, 'r', encoding='utf-8') as f:
         features = yaml.safe_load(f)['features']
     return features

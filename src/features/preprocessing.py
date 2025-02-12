@@ -10,15 +10,15 @@ from sklearn.pipeline import Pipeline
 def preprocessing(
     data: list, 
     lvl_id: str, 
-    features_names: dict
-) -> pl.LazyFrame:
+    features_names: dict[str, str]
+) -> pl.DataFrame:
     """
     Aplica una serie de transformaciones a los datos utilizando una pipeline de procesamiento.
 
     Parámetros:
     -----------
     data : list
-        Lista de datos a procesar antes de ser convertidos en un LazyFrame de Polars.
+        Lista de datos a procesar antes de ser convertidos en un DataFrame de Polars.
     lvl_id : str
         Identificador de nivel que se usará para agrupar los datos en la transformación final.
     features_names : dict
@@ -26,8 +26,8 @@ def preprocessing(
 
     Retorna:
     --------
-    pl.LazyFrame
-        LazyFrame de Polars con los datos transformados y listos para su uso.
+    pl.DataFrame
+        DataFrame de Polars con los datos transformados y listos para su uso en modo eager.
     """
     pipe = Pipeline([
         ('raw_data', RawDataPreprocessor()),
@@ -46,11 +46,11 @@ def preprocessing(
     # Aplicar la pipeline a los datos
     data_preprocessed = pipe.fit_transform(data)
     
-    # Asegurarnos de que el resultado sea un LazyFrame
-    if isinstance(data_preprocessed, pl.DataFrame):
-        return data_preprocessed.lazy()
-    elif isinstance(data_preprocessed, pl.LazyFrame):
-        return data_preprocessed
+    # Convertir LazyFrame a DataFrame si es necesario
+    if isinstance(data_preprocessed, pl.LazyFrame):
+        return data_preprocessed.collect()  # Convertir a modo eager
+    elif isinstance(data_preprocessed, pl.DataFrame):
+        return data_preprocessed  # Ya está en modo eager, devolver directamente
     else:
-        # Si es un ndarray u otro tipo, convertirlo a LazyFrame
-        return pl.DataFrame(data_preprocessed).lazy()
+        # Si el resultado es un tipo diferente, convertirlo a DataFrame
+        return pl.DataFrame(data_preprocessed)
