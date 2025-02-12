@@ -2085,23 +2085,6 @@ files = [
 ]
 
 [[package]]
-name = "kaleido"
-version = "0.2.1"
-description = "Static image export for web-based visualization libraries with zero dependencies"
-optional = false
-python-versions = "*"
-groups = ["main"]
-markers = "platform_machine == \"aarch64\" or platform_machine == \"x86_64\" or platform_machine != \"aarch64\" and platform_machine != \"x86_64\""
-files = [
-    {file = "kaleido-0.2.1-py2.py3-none-macosx_10_11_x86_64.whl", hash = "sha256:ca6f73e7ff00aaebf2843f73f1d3bacde1930ef5041093fe76b83a15785049a7"},
-    {file = "kaleido-0.2.1-py2.py3-none-macosx_11_0_arm64.whl", hash = "sha256:bb9a5d1f710357d5d432ee240ef6658a6d124c3e610935817b4b42da9c787c05"},
-    {file = "kaleido-0.2.1-py2.py3-none-manylinux1_x86_64.whl", hash = "sha256:aa21cf1bf1c78f8fa50a9f7d45e1003c387bd3d6fe0a767cfbbf344b95bdc3a8"},
-    {file = "kaleido-0.2.1-py2.py3-none-manylinux2014_aarch64.whl", hash = "sha256:845819844c8082c9469d9c17e42621fbf85c2b237ef8a86ec8a8527f98b6512a"},
-    {file = "kaleido-0.2.1-py2.py3-none-win32.whl", hash = "sha256:ecc72635860be616c6b7161807a65c0dbd9b90c6437ac96965831e2e24066552"},
-    {file = "kaleido-0.2.1-py2.py3-none-win_amd64.whl", hash = "sha256:4670985f28913c2d063c5734d125ecc28e40810141bdb0a46f15b76c1d45f23c"},
-]
-
-[[package]]
 name = "kiwisolver"
 version = "1.4.8"
 description = "A fast implementation of the Cassowary constraint solver"
@@ -3831,15 +3814,15 @@ test = ["cuda-python", "numba (>=0.58)", "psutil", "pytest", "pytest-cov"]
 
 [[package]]
 name = "pyparsing"
-version = "3.2.1"
+version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.6.8"
 groups = ["main"]
 markers = "platform_machine == \"aarch64\" or platform_machine == \"x86_64\" or platform_machine != \"aarch64\" and platform_machine != \"x86_64\""
 files = [
-    {file = "pyparsing-3.2.1-py3-none-any.whl", hash = "sha256:506ff4f4386c4cec0590ec19e6302d3aedb992fdc02c761e90416f158dacf8e1"},
-    {file = "pyparsing-3.2.1.tar.gz", hash = "sha256:61980854fd66de3a90028d679a954d5f2623e83144b5afe5ee86f43d762e5f0a"},
+    {file = "pyparsing-3.0.9-py3-none-any.whl", hash = "sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"},
+    {file = "pyparsing-3.0.9.tar.gz", hash = "sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"},
 ]
 
 [package.extras]
@@ -5260,4 +5243,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "3.11.11"
-content-hash = "ab6b779d6e55dfbbc0ed22a49487ba9a834b2324ca0084a64f274f9a539e07dc"
+content-hash = "185fd424ab06be6db68239913fe6f0c2a5ac3a08669772f2399c7a5752890059"

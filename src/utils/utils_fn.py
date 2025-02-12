@@ -13,6 +13,7 @@ import seaborn as sns
 import empiricaldist
 import yaml
 import json
+import xgboost as xgb
 sns.set_theme(context='notebook', style=plt.style.use('dark_background')) # type: ignore
 
 
@@ -501,30 +502,45 @@ def gather_variable_info(
     return results
 
 
-# Curva ROC
-def roc_curve_plot(model, X_val:pd.DataFrame, y_val:pd.Series):
+def roc_curve_plot(model, X_val: pd.DataFrame, y_val: pd.Series) -> None:
+    """
+    Genera y muestra la curva ROC del modelo usando la API nativa de XGBoost
+    o la API scikit-learn, dependiendo del tipo de objeto 'model'.
     
-    # Copia
-    y_val = y_val.copy()
+    Si el modelo es un xgb.Booster (API nativa), se crea un DMatrix y se predicen
+    las probabilidades. Si el modelo es un estimador de scikit-learn, se asume que
+    implementa el método predict_proba y se extrae la probabilidad para la clase 1.
     
-    # Predecir probabilidades de clase para datos de prueba
-    y_pred = model.predict_proba(X_val)[:, 1]
-
-    # Calcular curva ROC y área bajo la curva
+    Parámetros:
+      - model: modelo XGBoost (ya sea un Booster o un estimador de scikit-learn).
+      - X_val: DataFrame de validación.
+      - y_val: Series con las etiquetas verdaderas para validación.
+    """
+    # Verificar si el modelo es un Booster (API nativa de XGBoost)
+    if isinstance(model, xgb.Booster):
+        dval = xgb.DMatrix(X_val, label=y_val)
+        y_pred = model.predict(dval)
+    else:
+        # Se asume que el modelo es de scikit-learn y posee predict_proba
+        y_pred = model.predict_proba(X_val)[:, 1]
+    
+    # Calcular la curva ROC y el área bajo la curva
     fpr, tpr, thresholds = roc_curve(y_val, y_pred)
     roc_auc = auc(fpr, tpr)
-
-    # Crear gráfico de curva ROC
-    plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc, color='dodgerblue')
-    plt.plot([0, 1], [0, 1], 'k--', color='crimson')
+    
+    # Crear gráfico de la curva ROC
+    plt.figure(figsize=(8.5, 6))
+    plt.plot(fpr, tpr, label=f'ROC curve (AUC = {roc_auc:.2f})', color='dodgerblue')
+    plt.plot([0, 1], [0, 1], '--', color='crimson')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.0])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Receiver Operating Characteristic\n')
+    plt.title('Receiver Operating Characteristic')
     plt.legend(loc='lower right')
-    plt.grid(color='white', linestyle='-', linewidth=0.25)
+    plt.grid(color='white', linestyle='-', linewidth=0.1)
     plt.tight_layout()
+    plt.show()
 
 
 # Curva de calibración

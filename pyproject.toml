@@ -11,7 +11,7 @@ polars = {version = "*", extras = ["gpu"]}
 cudf-cu12 = {version = "24.12.*", source = "nvidia"}
 cudf-polars-cu12 = {version = "*", source = "nvidia"}
 scikit-learn = "^1.6.1"
-matplotlib = "^3.10.0"
+matplotlib = "3.10"
 seaborn = "^0.13.2"
 empiricaldist = "^0.8.0"
 mlflow = "^2.20.1"
@@ -23,7 +23,6 @@ optuna = "^4.2.0"
 optuna-integration = {extras = ["mlflow"], version = "^4.2.1"}
 toml = "^0.10.2"
 plotly = "^6.0.0"
-kaleido = "0.2.1"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"

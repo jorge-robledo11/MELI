@@ -10,9 +10,18 @@ categoricals_less_than_threshold = [ "state",]
 categoricals_high_cardinality = [ "state", "listing_type",]
 categoricals_low_cardinality = [ "local_pickup", "shipping_mode",]
 
-[xgb-params]
+[xgb-default-params]
 objective = "binary:logistic"
 eta = 0.1
 eval_metric = [ "auc", "logloss",]
 seed = 25
 device = "cuda"
+
+[xgb-tunned-params]
+max_depth = 7
+learning_rate = 0.042401199587621445
+min_child_weight = 1
+subsample = 0.9796639897736359
+colsample_bytree = 0.5402155160724709
+reg_alpha = 0.005702786138404622
+reg_lambda = 4.718292378504636
