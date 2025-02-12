@@ -543,35 +543,6 @@ def roc_curve_plot(model, X_val: pd.DataFrame, y_val: pd.Series) -> None:
     plt.show()
 
 
-# Curva de calibración
-def plot_calibration_curve(y_true, probs, bins, model):
-
-    fraction_of_positives, mean_predicted_value = calibration_curve(y_true, probs, n_bins=bins, 
-                                                                    strategy='uniform')
-    max_val = max(mean_predicted_value)
-    
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    plt.subplot(1, 2, 1)
-    plt.plot(mean_predicted_value, fraction_of_positives, label=type(model).__name__, 
-             c='limegreen')
-    plt.plot(np.linspace(0, max_val, bins), np.linspace(0, max_val, bins),
-             linestyle='--', color='crimson', label='Perfect calibration')
-    plt.xlabel('Probability Predictions')
-    plt.ylabel('Fraction of positive examples')
-    plt.title('Calibration Curve\n')
-    plt.legend(loc='upper left')
-    plt.grid(color='white', linestyle='-', linewidth=0.25)
-
-    plt.subplot(1, 2, 2)
-    plt.hist(probs, range=(0, 1), bins=bins, density=False, stacked=True, alpha=0.3, 
-             color='xkcd:dark cyan', edgecolor='white', lw=0.5)
-    plt.xlabel('Probability Predictions')
-    plt.ylabel('Fraction of examples')
-    plt.title('Density\n')
-    plt.grid(color='white', linestyle='-', linewidth=0.25)
-    plt.tight_layout()
-
-
 # Función de matriz de confusión
 def cnf_matrix(y_true:pd.DataFrame, y_pred:pd.Series, threshold=0.5):
     

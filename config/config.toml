@@ -19,9 +19,9 @@ device = "cuda"
 
 [xgb-tunned-params]
 max_depth = 7
-learning_rate = 0.042401199587621445
-min_child_weight = 1
-subsample = 0.9796639897736359
-colsample_bytree = 0.5402155160724709
-reg_alpha = 0.005702786138404622
-reg_lambda = 4.718292378504636
+learning_rate = 0.00430717491483756
+min_child_weight = 4
+subsample = 0.8377009078022873
+colsample_bytree = 0.7144793051992504
+reg_alpha = 0.0017293439632290603
+reg_lambda = 0.0010064837170065289
