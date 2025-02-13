@@ -1,6 +1,6 @@
-import sys
+# import sys
 from pathlib import Path
-sys.path.append(str(Path.cwd().parent.parent))
+# sys.path.append(str(Path.cwd().parent.parent))
 from config.config import settings
 from src.utils.preprocessors import *
 
@@ -11,7 +11,7 @@ def preprocessing(
     data: list, 
     lvl_id: str, 
     features_names: dict[str, str]
-) -> pl.DataFrame:
+    ) -> pl.DataFrame:
     """
     Aplica una serie de transformaciones a los datos utilizando una pipeline de procesamiento.
 

@@ -45,10 +45,10 @@ def capture_variables(data: pd.DataFrame) -> tuple:
     5. temporaries
     """
 
-    numericals = list(data.select_dtypes(include = [np.int32, np.int64, np.float32, np.float64]).columns)
-    categoricals = list(data.select_dtypes(include = ['category', 'object', 'bool']).columns)
-    temporaries = list(data.select_dtypes(include = ['datetime', 'timedelta']).columns)
+    numericals = list(data.select_dtypes(include=[np.int32, np.int64, np.float32, np.float64]).columns)
     discretes = [col for col in data[numericals] if len(data[numericals][col].unique()) <= 5]
+    temporaries = list(data.select_dtypes(include=['datetime', 'timedelta']).columns)
+    categoricals = list(data.select_dtypes(include=['category', 'object', 'bool']).columns)
     continuous = [col for col in data[numericals] if col not in discretes]
 
     # Variables

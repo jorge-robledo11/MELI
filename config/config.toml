@@ -10,6 +10,11 @@ categoricals_less_than_threshold = [ "state",]
 categoricals_high_cardinality = [ "state", "listing_type",]
 categoricals_low_cardinality = [ "local_pickup", "shipping_mode",]
 
+[pipeline-params]
+n_cat_high = 2
+n_cat_low = 2
+bins = 8
+
 [xgb-default-params]
 objective = "binary:logistic"
 eta = 0.1
