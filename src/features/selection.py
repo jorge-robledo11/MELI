@@ -5,7 +5,7 @@ from feature_engine.selection import DropFeatures, DropConstantFeatures, DropCor
 from feature_engine.preprocessing import MatchVariables, MatchCategories
 
 # Importa tus utilidades de variable capture/info
-from src.utils.utils_fn import capture_variables, gather_variable_info
+from src.utils.utils_fn import capture_variables
 from config.config import settings
 
 

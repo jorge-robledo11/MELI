@@ -1,6 +1,4 @@
-# import sys
 from pathlib import Path
-# sys.path.append(str(Path.cwd().parent.parent))
 from config.config import settings
 import json
 

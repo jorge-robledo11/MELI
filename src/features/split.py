@@ -1,8 +1,4 @@
-# import sys
-from pathlib import Path
-# sys.path.append(str(Path.cwd().parent.parent))
 from config.config import settings
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -33,15 +29,10 @@ def split_train_val_test(data: pd.DataFrame, target: str, seed: int) -> tuple[pd
         Conjuntos codificados de la variable objetivo para entrenamiento, validación y prueba.
         Los valores están codificados como enteros usando LabelEncoder.
     """
-
-    # data = data.set_index(target)
-    # print(data)
     
     # 1. Separar características (X) y objetivo (y)
     X = data.loc[:, data.columns != target]
     y = data.loc[:, data.columns == target].squeeze()
-    
-    # print(X)
 
     # 2. Dividir el conjunto original en 60% train y 40% restante (temp)
     X_train, X_temp, y_train, y_temp = train_test_split(
