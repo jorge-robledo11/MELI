@@ -113,10 +113,9 @@ Se implementó una pipeline de selección de características basado en:
 
 1. **Análisis de Correlación**:
    - Eliminación de variables altamente correlacionadas.
-   - Selección basada en la correlación con la variable objetivo.
 
-2. **Importancia de Variables**:
-   - Identificación y selección de las características más relevantes mediante análisis de importancia.
+2. **Análisis de Varianza**:
+   - Eliminación de variables con nula o cuasi nula varianza.
 
 ### Feature Engineering
 Se realizaron los siguientes procesos de ingeniería de características:
@@ -130,14 +129,7 @@ Se realizaron los siguientes procesos de ingeniería de características:
    - Ratios entre stock y ventas.
 
 ### Pipeline
-Se implementó una pipeline de selección de características basado en:
-
-1. **Análisis de Correlación**:
-   - Eliminación de variables altamente correlacionadas.
-   - Selección basada en la correlación con la variable objetivo.
-
-2. **Importancia de Variables**:
-   - Identificación y selección de las características más relevantes mediante análisis de importancia.
+Se implementó una pipeline de muchas transformaciones basado en la experimentación, donde se probaron ciertas combinaciones de parámetros y buscando maximizar una métrica en cuestión.
 
 ![Pipeline](reports/results-fe.png)
 *Nota: La imagen se muestra para ilustrar el proceso de creación de variables, aunque puede no reflejar numéricamente los valores exactos obtenidos en los notebooks.*
@@ -153,23 +145,23 @@ Se implementó una pipeline de selección de características basado en:
 
 ### Hiperparámetros Optimizados
 Los mejores hiperparámetros encontrados fueron:
-- Learning rate: 0.01 con scheduler adaptativo.
-- Profundidad máxima del árbol: 8.
-- Peso mínimo por nodo: 3.
-- Regularización alpha: 0.001.
-- Regularización lambda: 0.1.
-- Subsample: 0.8.
-- Colsample_bytree: 0.8.
+- Learning rate con scheduler adaptativo.
+- Profundidad máxima del árbol.
+- Peso mínimo por nodo.
+- Regularización alpha.
+- Regularización lambda.
+- Subsample.
+- Colsample_bytree.
 
 ## Resultados
 
 ### Métricas Alcanzadas
-- **AUC en Entrenamiento**: 0.9831
-- **AUC en Validación**: 0.9745
-- **AUC en Prueba**: 0.9738
-- **Log-loss en Prueba**: 0.1247
+- **AUC en Entrenamiento**: 0.87
+- **AUC en Validación**: 0.87
+- **AUC en Prueba**: 0.87
 
 ![Curva ROC](reports/roc-curve.png)
+
 *La curva ROC ilustra el rendimiento general del clasificador.*
 
 ### Curvas de Aprendizaje
@@ -179,14 +171,14 @@ Las curvas de aprendizaje indican una convergencia estable sin signos de overfit
 ![Curva de Aprendizaje Log-loss](reports/learning-curve-logloss.png)
 
 ### Importancia de Variables
-El análisis de importancia de variables revela que las características temporales y de precio son las más determinantes:
+el **modelo se apoya principalmente en el tipo de publicación, el inventario y el valor total** para identificar la condición del producto (nuevo vs. usado), mientras que **otras variables** (envío, tiempo, entrega local y ubicación) **aportan señales adicionales** que refuerzan la clasificación.
 
 ![Importancia de Variables](reports/feature-importance.png)
 
 *Nota: Se han notado discrepancias entre algunos resultados expuestos en los notebooks y los del modelo final. Se recomienda revisar los notebooks para obtener detalles experimentales y comprender los ajustes realizados en la etapa final.*
 
 ## Conclusiones
-- El modelo obtiene un desempeño sobresaliente con AUC superior a 0.97 en todos los conjuntos.
+- El modelo obtiene un desempeño sobresaliente con AUC superior a 0.87 en todos los conjuntos.
 - La mínima diferencia entre las métricas de entrenamiento y prueba refuerza la capacidad de generalización del modelo.
-- Las variables relacionadas con el tiempo y el precio resultaron ser predictores clave.
-- A pesar de algunas diferencias con los resultados experimentales de los notebooks, los ajustes finales aseguran un balance adecuado entre precisión y recall para su aplicación en producción.
+- Las variables relacionadas con el `listing_type`, `available_quantity` y `total_amount` ser predictores claves.
+- A pesar de algunas diferencias con los resultados experimentales de los notebooks, los ajustes finales aseguran un balance adecuado entre precisión y recall.
