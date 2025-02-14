@@ -2,79 +2,93 @@
 
 ## Tabla de Contenido
 - [Descripción del Problema](#descripción-del-problema)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Distribución de Clases](#distribución-de-clases)
 - [Análisis Exploratorio de Datos](#análisis-exploratorio-de-datos)
   - [Estructura del Dataset](#estructura-del-dataset)
   - [Variables Relevantes](#variables-relevantes)
 - [Criterios de Selección de Variables](#criterios-de-selección-de-variables)
   - [Feature Selection](#feature-selection)
   - [Feature Engineering](#feature-engineering)
+  - [Pipeline](#pipeline)
 - [Modelado](#modelado)
   - [Estrategia de Modelado](#estrategia-de-modelado)
   - [Hiperparámetros Optimizados](#hiperparámetros-optimizados)
-- [Resultados y Ajustes Finales](#resultados-y-ajustes-finales)
+- [Resultados](#resultados)
   - [Métricas Alcanzadas](#métricas-alcanzadas)
   - [Curvas de Aprendizaje](#curvas-de-aprendizaje)
   - [Importancia de Variables](#importancia-de-variables)
 - [Conclusiones](#conclusiones)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 
 ## Descripción del Problema
 El proyecto consiste en desarrollar un modelo de clasificación binaria que determine si un artículo publicado en MercadoLibre es nuevo o usado, basado en características del producto y de su publicación. Se busca obtener un modelo robusto que permita distinguir correctamente entre ambos estados, mejorando la precisión en comparación con análisis previos realizados en notebooks.
 
 ## Estructura del Proyecto
 ```
-├── LICENSE                # Licencia del proyecto
-├── README.md              # Documentación principal
-├── artifacts/             # Artefactos del modelo
-│   │
-│   ├── models/            # Modelos generados
+├── LICENSE                
+├── README.md
+├── main.py
+├── poetry.lock
+├── pyproject.toml
+├── artifacts/
+│   ├── models/
 │   │   └── final_model.json
-│   └── pipelines/         # Pipelines de preprocesamiento
+│   └── pipelines/
 │       ├── pipeline_feature_engineering.pkl
 │       ├── pipeline_feature_selection.pkl
 │       └── pipeline_preprocessing.pkl
-├── config/                # Configuraciones
-│   ├── config.py          # Configuración principal
-│   ├── config.toml        # Parámetros del modelo
-│   ├── features_names.yaml# Nombres de características
-│   ├── logger_settings.py # Configuración de logs
-│   └── model_settings.py  # Configuración del modelo
-├── data/                  # Datos
-│   ├── processed/         # Datos procesados
-│   └── raw/               # Datos crudos
-├── docs/                  # Documentación adicional
-├── mlruns/                # Registro de experimentos MLflow
-├── notebooks/             # Jupyter notebooks
-│   ├── experiments/       # Notebooks de experimentación
+├── config/  
+│   ├── config.py
+│   ├── config.toml
+│   └── features_names.yaml
+├── data/
+├── docs/
+├── mlruns/
+├── notebooks/
+│   ├── experiments/
 │   │   ├── 01_preprocessing.ipynb
 │   │   ├── 02_feature_engineering.ipynb
 │   │   ├── 03_hyperparameter_tunning.ipynb
 │   │   └── 04_interpretability_and_results.ipynb
-│   └── exploration/       # Notebooks de exploración
+│   └── exploration/ 
 │       ├── 01_exp_inicial.ipynb
 │       ├── 02_analisis_negocio.ipynb
 │       └── 03_eda.ipynb
-├── reports/               # Reportes y visualizaciones
+├── reports/ 
+│   ├── clases.png
+│   ├── correlation_matrix_categoricals.png
+│   ├── correlation_matrix_continuous.png
 │   ├── feature-importance.png
+│   ├── insights.png
+│   ├── insights2.png
+│   ├── insights3.png
+│   ├── insights4.png
+│   ├── insights5.png
 │   ├── learning-curve-auc.png
 │   ├── learning-curve-logloss.png
 │   ├── results-fe.png
 │   └── roc-curve.png
-├── src/                   # Código fuente
-│   ├── dataset/           # Manejo de datos
-│   │   └── fetch_data.py
-│   ├── features/          # Procesamiento de características
-│   │   ├── engineering.py
-│   │   ├── preprocessing.py
-│   │   ├── selection.py
-│   │   └── split.py
-│   ├── models/            # Modelos
-│   │   ├── evaluate.py
-│   │   └── train.py
-│   └── utils/             # Utilidades
-│       ├── preprocessors.py
-│       └── utils_fn.py
+└── src/   
+    ├── dataset/ 
+    │   └── fetch_data.py
+    ├── features/   
+    │   ├── engineering.py
+    │   ├── preprocessing.py
+    │   ├── selection.py
+    │   └── split.py
+    ├── models/    
+    │   ├── evaluate.py
+    │   └── train.py
+    └── utils/ 
+        ├── preprocessors.py
+        └── utils_fn.py
 ```
+
+## Distribución de Clases
+
+La gráfica muestra la proporción de artículos en dos categorías de condición ("new" y "used"). Se observa que la mayoría de los artículos se clasifica como nuevos (alrededor de un 55%), mientras que el resto corresponde a artículos usados (en torno al 45%).
+
+![Diagrama de Clases](reports/clases.png)
 
 ## Análisis Exploratorio de Datos
 
