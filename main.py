@@ -59,7 +59,7 @@ def main() -> None:
         target=TARGET,
         seed=SEED
     )
-    print('5. Separamos en sets de train, test y val')
+    print('5. Separamos en sets de train, val y test')
     
     # Aplicar selección de características
     X_train, X_val, X_test = feature_selection(

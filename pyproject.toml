@@ -24,7 +24,6 @@ optuna-integration = {extras = ["mlflow"], version = "^4.2.1"}
 toml = "^0.10.2"
 plotly = "^6.0.0"
 python-dotenv = "^1.0.1"
-loguru = "^0.7.3"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
