@@ -1,0 +1,122 @@
+{
+    "accepts_mercadopago": {
+        "contexto": "Indica si el vendedor acepta MercadoPago como método de pago. Es un aspecto importante para generar confianza en la transacción y para analizar la adopción de sistemas de pago propios de la plataforma.",
+        "tipo": "bool"
+    },
+    "attribute_group": {
+        "contexto": "Grupo al que pertenece el atributo, ofreciendo una clasificación adicional y ayudando a organizar la información técnica o descriptiva del producto.",
+        "tipo": "string"
+    },
+    "attribute_group_id": {
+        "contexto": "Identificador del grupo de atributos del producto. Permite clasificar características en categorías (por ejemplo, 'find', 'adicionales', 'dflt', 'confort') para facilitar la búsqueda y comparación.",
+        "tipo": "string"
+    },
+    "attribute_id": {
+        "contexto": "Identificador único del atributo. Facilita la referencia y el cruce de información en análisis de especificaciones y comparaciones entre productos.",
+        "tipo": "string"
+    },
+    "attribute_name": {
+        "contexto": "Nombre del atributo que describe alguna característica del producto (por ejemplo, 'año', 'dirección', 'género', 'marca', 'gps'). Es esencial para brindar detalles técnicos o de especificación del producto.",
+        "tipo": "string"
+    },
+    "automatic_relist": {
+        "contexto": "Indica si el anuncio se realiza automáticamente una vez finalizado el tiempo de publicación. Este dato es relevante para entender la estrategia del vendedor en cuanto a visibilidad y continuidad en la oferta.",
+        "tipo": "bool"
+    },
+    "available_quantity": {
+        "contexto": "Cantidad de unidades que aún están disponibles para la venta. Permite monitorear el stock restante y planificar estrategias de reabastecimiento o promoción.",
+        "tipo": "i64"
+    },
+    "buying_mode": {
+        "contexto": "Modo de compra en el anuncio (por ejemplo, 'classified' o 'buy_it_now'). Indica si la transacción es mediante oferta directa o un sistema de subasta/anuncio, lo cual influye en la dinámica de venta.",
+        "tipo": "string"
+    },
+    "category_id": {
+        "contexto": "Identificador de la categoría del producto. Es fundamental para segmentar y analizar la oferta por tipos de productos, permitiendo identificar tendencias de consumo en cada categoría.",
+        "tipo": "string"
+    },
+    "city": {
+        "contexto": "Ciudad donde se ubica la transacción o el producto. Permite identificar patrones de demanda a nivel local y ajustar la oferta según las particularidades de cada área urbana.",
+        "tipo": "string"
+    },
+    "country": {
+        "contexto": "País en el que se encuentra el usuario o donde se realiza la transacción. Permite segmentar y analizar el comportamiento de compra según la ubicación geográfica.",
+        "tipo": "string"
+    },
+    "currency": {
+        "contexto": "Moneda en la que se realiza la transacción (por ejemplo, 'ars' para pesos argentinos). Permite la correcta interpretación del precio y el análisis financiero en contextos multimoneda.",
+        "tipo": "string"
+    },
+    "date_created": {
+        "contexto": "Fecha y hora de creación del anuncio. Permite medir la antigüedad del listado, analizar tendencias de creación de anuncios y evaluar la evolución del inventario en el tiempo.",
+        "tipo": "datetime[ms]"
+    },
+    "free_shipping": {
+        "contexto": "Determina si el envío del producto es gratuito. Es un factor importante que puede influir en la decisión de compra y en la competitividad del anuncio.",
+        "tipo": "bool"
+    },
+    "initial_quantity": {
+        "contexto": "Cantidad inicial de unidades disponibles cuando se creó el anuncio. Es fundamental para evaluar el stock inicial y, en conjunto con las ventas, el rendimiento del producto.",
+        "tipo": "i64"
+    },
+    "last_updated": {
+        "contexto": "Fecha y hora de la última actualización del anuncio. Permite evaluar la frescura de la información, la frecuencia de modificaciones y detectar listados que puedan estar desactualizados.",
+        "tipo": "datetime[ms]"
+    },
+    "listing_type": {
+        "contexto": "Tipo de anuncio (ej.: 'free', 'silver', 'bronze', 'gold'). Indica el nivel o modalidad del listado, lo cual puede estar relacionado con la visibilidad, costos de comisión o promoción dentro de la plataforma.",
+        "tipo": "string"
+    },
+    "local_pickup": {
+        "contexto": "Indica si el producto puede ser recogido localmente por el comprador. Este dato es relevante para estrategias logísticas y para evaluar las preferencias de envío de los clientes.",
+        "tipo": "bool"
+    },
+    "price": {
+        "contexto": "Precio en el que se oferta el producto. Es una variable clave para el análisis de ventas, comparación entre productos y la estrategia de pricing.",
+        "tipo": "f64"
+    },
+    "product_id": {
+        "contexto": "Identificador único del producto en la plataforma. Es clave para el seguimiento individual de cada producto y para analizar su rendimiento a lo largo del tiempo.",
+        "tipo": "string"
+    },
+    "seller_id": {
+        "contexto": "Identificador único del vendedor en la plataforma. Permite realizar análisis sobre el desempeño de vendedores y segmentar la oferta según el origen.",
+        "tipo": "i64"
+    },
+    "shipping_mode": {
+        "contexto": "Modo de envío seleccionado o asignado (por ejemplo, 'not_specified', 'me2', etc.). Ayuda a entender la logística aplicada y puede impactar en el costo y tiempo de entrega.",
+        "tipo": "string"
+    },
+    "site_id": {
+        "contexto": "Identificador del sitio o marketplace (por ejemplo, 'mla' para MercadoLibre Argentina). Facilita la segmentación cuando la plataforma opera en varios países o regiones.",
+        "tipo": "string"
+    },
+    "sold_quantity": {
+        "contexto": "Cantidad de unidades vendidas a lo largo del tiempo. Es un indicador clave del rendimiento del anuncio y del éxito en las ventas.",
+        "tipo": "i64"
+    },
+    "start_time": {
+        "contexto": "Fecha y hora en la que el anuncio se puso activo. Permite calcular la duración del anuncio, analizar la efectividad del listado y su exposición al mercado.",
+        "tipo": "datetime[ms]"
+    },
+    "state": {
+        "contexto": "Provincia o estado dentro del país. Es útil para análisis regionales y para adaptar estrategias de marketing o logística en función de la zona.",
+        "tipo": "string"
+    },
+    "status": {
+        "contexto": "Estado actual del anuncio (por ejemplo, 'active', 'inactive', 'sold'). Permite monitorizar la disponibilidad de los productos y analizar la tasa de conversión de los listados.",
+        "tipo": "string"
+    },
+    "stop_time": {
+        "contexto": "Fecha y hora en la que el anuncio dejará de estar activo. Es importante para la gestión de inventario, ya que ayuda a determinar la duración de la publicación y planificar estrategias de reposición o promoción.",
+        "tipo": "datetime[ms]"
+    },
+    "target": {
+        "contexto": "Condición del producto, generalmente indica si es 'new' (nuevo) o 'used' (usado). Es fundamental para definir estrategias de precios, campañas de marketing y segmentación de mercado.",
+        "tipo": "string"
+    },
+    "title": {
+        "contexto": "Título del anuncio que resume las características principales del producto. Es clave para atraer la atención de los compradores y para optimizar la búsqueda dentro de la plataforma.",
+        "tipo": "string"
+    }
+}
