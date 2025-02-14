@@ -5,9 +5,9 @@ from src.features.split import split_train_val_test
 from src.utils.utils_fn import load_features_names
 from src.features.selection import feature_selection
 from src.features.engineering import feature_engineering
+from src.models.train import train_model
 
 import toml
-
 import warnings
 warnings.simplefilter('ignore')
 
@@ -76,7 +76,19 @@ def main() -> None:
         y_train=y_train
     )
     
+    booster = train_model(
+        X_train=X_train, 
+        y_train=y_train,
+        X_val=X_val,
+        y_val=y_val,
+        default_params=config['xgb-default-params'],
+        tuned_params=config['xgb-tuned-params'],
+        num_boost_round=300,
+        early_stopping_rounds=25
+    )
     
+    print(type(booster))
+
 
 if __name__ == '__main__':
     main()

@@ -1,9 +1,6 @@
 # • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ Pyfunctions ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ • ~ •
 # Librerías y/o depedencias
 from scipy import stats
-from matplotlib import gridspec
-from IPython.display import display, Latex
-from sklearn.calibration import calibration_curve
 from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import confusion_matrix
 import pandas as pd
@@ -52,11 +49,11 @@ def capture_variables(data: pd.DataFrame) -> tuple:
     continuous = [col for col in data[numericals] if col not in discretes]
 
     # Variables
-    print('\t\tTipos de variables')
-    print(f'Hay {len(continuous)} variables continuas')
-    print(f'Hay {len(discretes)} variables discretas')
-    print(f'Hay {len(temporaries)} variables temporales')
-    print(f'Hay {len(categoricals)} variables categóricas')
+    # print('\t\tTipos de variables')
+    # print(f'Hay {len(continuous)} variables continuas')
+    # print(f'Hay {len(discretes)} variables discretas')
+    # print(f'Hay {len(temporaries)} variables temporales')
+    # print(f'Hay {len(categoricals)} variables categóricas')
     
     variables = tuple((continuous, categoricals, discretes, temporaries))
 

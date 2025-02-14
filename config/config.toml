@@ -22,11 +22,16 @@ eval_metric = [ "auc", "logloss",]
 seed = 25
 device = "cuda"
 
-[xgb-tunned-params]
-max_depth = 7
-learning_rate = 0.00430717491483756
-min_child_weight = 4
-subsample = 0.8377009078022873
-colsample_bytree = 0.7144793051992504
-reg_alpha = 0.0017293439632290603
-reg_lambda = 0.0010064837170065289
+[xgb-tuned-params]
+objective = "binary:logistic"
+eval_metric = [ "auc", "logloss",]
+seed = 25
+device = "cuda"
+max_depth = 6
+learning_rate = 0.09945811829216437
+min_child_weight = 3
+subsample = 0.9603898382520749
+colsample_bytree = 0.7536836580146604
+reg_alpha = 0.09884773595219716
+reg_lambda = 0.0065655223184726995
+num_boosted_rounds = 93
