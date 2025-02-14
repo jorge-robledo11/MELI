@@ -3,6 +3,10 @@
 from scipy import stats
 from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import confusion_matrix
+from config.config import settings
+from typing import Optional
+import toml
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,6 +16,52 @@ import yaml
 import json
 import xgboost as xgb
 sns.set_theme(context='notebook', style=plt.style.use('dark_background')) # type: ignore
+
+
+def load_config() -> dict[str, any]:
+    """
+    Carga y valida la configuración desde config.toml
+    """
+    config_file_path = settings.CONFIG_DIR / 'config.toml'
+    if not config_file_path.exists():
+        raise FileNotFoundError(f"Archivo de configuración no encontrado: {config_file_path}")
+    
+    with config_file_path.open('r') as file:
+        config = toml.load(file)
+    
+    
+    required_keys = [
+        'pipeline-feature-selection',
+        'pipeline-feature-engineering',
+        'pipeline-params',
+        'xgb-default-params',
+        'xgb-tuned-params'
+    ]
+    
+    for key in required_keys:
+        if key not in config:
+            raise KeyError(f"Clave requerida '{key}' no encontrada en config.toml")
+    
+    return config
+
+
+def get_required_env(key: str) -> str:
+    """
+    Obtiene una variable de entorno requerida y garantiza que sea str.
+    
+    Args:
+        key: Nombre de la variable de entorno
+    
+    Returns:
+        str: Valor de la variable de entorno
+        
+    Raises:
+        ValueError: Si la variable no está definida
+    """
+    value: Optional[str] = os.getenv(key)
+    if value is None:
+        raise ValueError(f"La variable de entorno '{key}' es requerida")
+    return value
 
 
 # Función para cargar el YAML

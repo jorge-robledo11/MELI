@@ -1,33 +1,6 @@
 import pandas as pd
 import numpy as np
 import xgboost as xgb
-from xgboost.callback import LearningRateScheduler
-from typing import Callable
-
-
-def create_lr_scheduler(learning_rate: float = 0.01) -> Callable[[int], float]:
-    """
-    Crea una función de scheduling del learning rate.
-    
-    Parámetros
-    ----------
-    learning_rate : float, opcional
-        Learning rate base. Por defecto, 0.01
-    
-    Retorna
-    -------
-    Callable[[int], float]
-        Función que ajusta el learning rate según la ronda actual
-    """
-    def lr_scheduler(current_round: int) -> float:
-        if current_round < 100:
-            return learning_rate
-        elif current_round < 300:
-            return learning_rate * 0.5
-        else:
-            return learning_rate * 0.1
-            
-    return lr_scheduler
 
 
 def train_model(
@@ -37,8 +10,6 @@ def train_model(
     y_val: pd.Series,
     default_params: dict,
     tuned_params: dict,
-    num_boost_round: int = 300,
-    early_stopping_rounds: int = 25
     ) -> xgb.Booster:
     """
     Entrena un modelo XGBoost con la API nativa, fusionando parámetros default
@@ -76,32 +47,19 @@ def train_model(
     # 3) Construir pesos según frecuencia de clase
     weight_dict = y_train_val.value_counts(normalize=True).to_dict()
     sample_weight = np.array([weight_dict[val] for val in y_train_val])
-
-    # 4) Crear DMatrix
-    dtrain = xgb.DMatrix(
-        data=X_train_val,
+    
+    # 4) Crear DMatrix unidos para entrenamiento y validación
+    dtrain_val = xgb.DMatrix(
+        data=X_train_val, 
         label=y_train_val,
         weight=sample_weight
     )
-    
-    # 1) Crear DMatrix **separados** para entrenamiento y validación
-    dtrain = xgb.DMatrix(X_train, label=y_train)
-    dval = xgb.DMatrix(X_val, label=y_val)
-    evals = [(dtrain, 'train'), (dval, 'validation')]
-    
-    # 5) Crear scheduler con el learning rate de los parámetros
-    lr = ultimate_params.get('learning_rate', 0.01)
-    callbacks = [LearningRateScheduler(create_lr_scheduler(lr))]
 
-    # 6) Entrenar con xgb.train
+    # 5) Entrenar con xgb.train
     booster = xgb.train(
         params=ultimate_params,
-        dtrain=dtrain,
-        evals=evals,
-        num_boost_round=num_boost_round,
-        early_stopping_rounds=early_stopping_rounds,
-        callbacks=callbacks,
-        verbose_eval=False
+        dtrain=dtrain_val,
+        num_boost_round=ultimate_params['num_boost_round'],
     )
 
     return booster

@@ -1,4 +1,5 @@
 from config.config import settings
+from dotenv import load_dotenv, find_dotenv
 from src.dataset.fetch_data import build_dataset
 from src.features.preprocessing import preprocessing
 from src.features.split import split_train_val_test
@@ -6,32 +7,30 @@ from src.utils.utils_fn import load_features_names
 from src.features.selection import feature_selection
 from src.features.engineering import feature_engineering
 from src.models.train import train_model
+from src.models.evaluate import evaluate_model
+from src.utils.utils_fn import load_config, get_required_env
 
-import toml
 import warnings
 warnings.simplefilter('ignore')
 
-# Parámetros
-LVL_ID = 'product_id'
+# Cargar el archivo .env explícitamente usando find_dotenv
+load_dotenv(find_dotenv(), override=True)
+ 
+# Obtener y validar los parámetros de entorno requeridos
+LVL_ID: str = get_required_env('LVL_ID')
+TARGET: str = get_required_env('TARGET')
 SEED = 25
-TARGET = 'condition'
+
 
 # --------------------------------------------------------------------------------
-# 1. Cargar el archivo de configuración config.toml
+#                               FLUJO DEL PROYECTO
 # --------------------------------------------------------------------------------
-config_file_path = settings.CONFIG_DIR / 'config.toml'
-if config_file_path.exists():
-    with config_file_path.open('r') as file:
-        config = toml.load(file)
-else:
-    config = {}
-
-
-
 def main() -> None:
     """
     Función principal que ejecuta la carga y preprocesamiento de datos.
     """
+    # Cargar configuración
+    config = load_config()
     
     # Definir la ruta del archivo de datos
     data_path = settings.DATA_DIR / 'raw' / 'MLA_100k_checked_v3.jsonlines'
@@ -50,10 +49,10 @@ def main() -> None:
         features_names=features_names
     ).to_pandas()
     
-    # Supón que tu DataFrame se llama 'data' y la columna objetivo es 'condition'.
+    # Dividir los datos en conjuntos de entrenamiento, validación y prueba
     X_train, X_val, X_test, y_train, y_val, y_test = split_train_val_test(
         data=data, 
-        target=TARGET, 
+        target=TARGET,
         seed=SEED
     )
     
@@ -65,7 +64,7 @@ def main() -> None:
         features=config['pipeline-feature-selection']
     )
     
-    # Aplicar selección de características
+    # Aplicar ingeniería de características
     X_train, X_val, X_test = feature_engineering(
         X_train=X_train,
         X_val=X_val,
@@ -76,21 +75,24 @@ def main() -> None:
         y_train=y_train
     )
     
+    # Entrenar el modelo
     booster = train_model(
         X_train=X_train, 
         y_train=y_train,
         X_val=X_val,
         y_val=y_val,
         default_params=config['xgb-default-params'],
-        tuned_params=config['xgb-tuned-params'],
-        num_boost_round=300,
-        early_stopping_rounds=25
+        tuned_params=config['xgb-tuned-params']
     )
     
-    print(type(booster))
-
+    # Evaluar con los datos de test
+    roc_auc = evaluate_model(
+        booster=booster,
+        X_test=X_test,
+        y_test=y_test
+    )
+    
+    print(f'ROC-AUC: {roc_auc:0.2f}')
 
 if __name__ == '__main__':
     main()
-
-

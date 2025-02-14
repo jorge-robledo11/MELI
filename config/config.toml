@@ -34,4 +34,4 @@ subsample = 0.9603898382520749
 colsample_bytree = 0.7536836580146604
 reg_alpha = 0.09884773595219716
 reg_lambda = 0.0065655223184726995
-num_boosted_rounds = 93
+num_boost_round = 93
