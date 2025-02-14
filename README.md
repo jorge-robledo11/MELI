@@ -7,6 +7,8 @@
 - [Análisis Exploratorio de Datos](#análisis-exploratorio-de-datos)
   - [Estructura del Dataset](#estructura-del-dataset)
   - [Variables Relevantes](#variables-relevantes)
+  - [Análisis de Correlaciones](#análisis-de-correlaciones)
+- [Insights](#insights)
 - [Criterios de Selección de Variables](#criterios-de-selección-de-variables)
   - [Feature Selection](#feature-selection)
   - [Feature Engineering](#feature-engineering)
@@ -83,6 +85,55 @@ Se identificaron los siguientes grupos de variables:
    - Modo de compra
    - Aceptación de MercadoPago
    - Atributos del producto
+
+## Insights
+
+En esta sección se presentan algunos hallazgos clave (insights) relevantes para la estrategia de modelado y la comprensión del negocio:
+
+1. **Distribución geográfica por condición**  
+   ![state segmentado por condition](reports/insights.png)  
+   - La mayoría de las publicaciones (nuevas y usadas) provienen de la región de Buenos Aires y Capital Federal.  
+   - Esto sugiere que la oferta principal de MercadoLibre se concentra en zonas urbanas de alta densidad poblacional.
+
+2. **Moneda utilizada por condición**  
+   ![currency segmentado por condition](reports/insights2.png)  
+   - La divisa predominante es el peso argentino (ARS) tanto para productos nuevos como usados.  
+   - El uso de USD es marginal, lo que indica que la mayor parte de las transacciones se realizan en moneda local.
+
+3. **Transacciones por Día y Hora (fecha de creación)**  
+   ![Transacciones por Día y Hora - date_created](reports/insights3.png)  
+   - Se observa un mayor volumen de publicaciones en días hábiles, con picos alrededor del mediodía y la tarde.  
+   - Estos patrones pueden indicar los momentos de mayor actividad de los vendedores.
+
+4. **Transacciones por Día y Hora (última actualización)**  
+   ![Transacciones por Día y Hora - last_updated](reports/insights4.png)  
+   - El comportamiento de actualizaciones sigue una tendencia similar a la de creación, reforzando la idea de mayor actividad en horarios de trabajo.  
+   - Esto puede servir para optimizar estrategias de pricing o de relanzamiento de publicaciones en horarios pico.
+
+5. **Top 10 productos con mayor monto generado**  
+   ![Top 10 productos con mayor monto](reports/insights5.png)  
+   - Se destacan calzados y prendas de vestir como los que generan mayor facturación, lo que indica una alta demanda y/o precio unitario relevante.  
+   - Este insight podría orientar campañas de marketing específicas o segmentación más precisa para maximizar ventas.
+
+Estos hallazgos brindan una visión más amplia sobre cómo se comportan las publicaciones según su ubicación, moneda, momento de publicación/actualización y tipo de producto. Entender estos patrones resulta fundamental para afinar la estrategia de modelado y la toma de decisiones de negocio.
+
+### Análisis de Correlaciones
+Para comprender mejor la relación entre nuestras variables, se generaron dos tipos de matrices:
+
+1. **Matriz de Correlaciones para Variables Continuas**  
+   Esta matriz (basada en coeficientes de correlación de Pearson) muestra cómo se relacionan variables numéricas como `stock_quantity`, `available_quantity`, `total_amount`, etc. Se observan correlaciones moderadas en algunas de ellas, lo cual es útil para la etapa de selección de características, ya que variables altamente correlacionadas pueden redundar en información.
+
+![Matriz de Correlaciones](reports/correlation_matrix_continuous.png)
+
+2. **Matriz de Asociación (Cramér's V) para Variables Categóricas**  
+   Para las variables categóricas (como `state`, `city`, `listing_type`, etc.), se utilizó Cramér's V. Este valor oscila entre 0 y 1, indicando la fuerza de asociación entre variables. Así, podemos identificar pares de variables categóricas con alta dependencia, lo cual también puede orientar la selección o combinación de variables para el modelo.
+
+![Matriz de Asociación (Cramér's V)](reports/correlation_matrix_categoricals.png)
+
+En conjunto, estos análisis de correlaciones sirven para:
+- Detectar redundancias entre variables.
+- Priorizar variables relevantes.
+- Diseñar nuevas variables que capturen la interacción entre las existentes.
 
 ## Criterios de Selección de Variables
 
