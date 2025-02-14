@@ -25,63 +25,27 @@ El proyecto consiste en desarrollar un modelo de clasificación binaria que dete
 
 ## Estructura del Proyecto
 ```
-├── LICENSE                
+├── artifacts
+│   ├── models
+│   └── pipelines
+├── config
+├── data
+├── docs
+├── mlruns
+├── notebooks
+│   ├── experiments
+│   └── exploration
+├── reports
+├── src
+│   ├── dataset
+│   ├── features
+│   ├── models
+│   └── utils
+├── LICENSE
 ├── README.md
 ├── main.py
 ├── poetry.lock
-├── pyproject.toml
-├── artifacts/
-│   ├── models/
-│   │   └── final_model.json
-│   └── pipelines/
-│       ├── pipeline_feature_engineering.pkl
-│       ├── pipeline_feature_selection.pkl
-│       └── pipeline_preprocessing.pkl
-├── config/  
-│   ├── config.py
-│   ├── config.toml
-│   └── features_names.yaml
-├── data/
-├── docs/
-├── mlruns/
-├── notebooks/
-│   ├── experiments/
-│   │   ├── 01_preprocessing.ipynb
-│   │   ├── 02_feature_engineering.ipynb
-│   │   ├── 03_hyperparameter_tunning.ipynb
-│   │   └── 04_interpretability_and_results.ipynb
-│   └── exploration/ 
-│       ├── 01_exp_inicial.ipynb
-│       ├── 02_analisis_negocio.ipynb
-│       └── 03_eda.ipynb
-├── reports/ 
-│   ├── clases.png
-│   ├── correlation_matrix_categoricals.png
-│   ├── correlation_matrix_continuous.png
-│   ├── feature-importance.png
-│   ├── insights.png
-│   ├── insights2.png
-│   ├── insights3.png
-│   ├── insights4.png
-│   ├── insights5.png
-│   ├── learning-curve-auc.png
-│   ├── learning-curve-logloss.png
-│   ├── results-fe.png
-│   └── roc-curve.png
-└── src/   
-    ├── dataset/ 
-    │   └── fetch_data.py
-    ├── features/   
-    │   ├── engineering.py
-    │   ├── preprocessing.py
-    │   ├── selection.py
-    │   └── split.py
-    ├── models/    
-    │   ├── evaluate.py
-    │   └── train.py
-    └── utils/ 
-        ├── preprocessors.py
-        └── utils_fn.py
+└── pyproject.toml
 ```
 
 ## Distribución de Clases
