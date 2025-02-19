@@ -1,5 +1,4 @@
 from pathlib import Path
-from config.config import settings
 import json
 
 

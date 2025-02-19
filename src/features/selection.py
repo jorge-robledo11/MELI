@@ -6,7 +6,6 @@ from feature_engine.preprocessing import MatchVariables, MatchCategories
 
 # Importa tus utilidades de variable capture/info
 from src.utils.utils_fn import capture_variables
-from config.config import settings
 
 
 def ensure_variable_list(variables: list) -> list[str | int]:
