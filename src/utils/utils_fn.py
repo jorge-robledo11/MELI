@@ -5,6 +5,8 @@ from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import confusion_matrix
 from config.config import settings
 from typing import Optional
+from joblib import Parallel, delayed
+from functools import wraps
 import toml
 import os
 import pandas as pd
@@ -16,6 +18,30 @@ import yaml
 import json
 import xgboost as xgb
 sns.set_theme(context='notebook', style=plt.style.use('dark_background')) # type: ignore
+
+
+def parallelize(n_jobs=-1, backend=None):
+    """
+    Decorador que permite ejecutar una función en paralelo sobre una lista de argumentos.
+    
+    Parámetros:
+      n_jobs: Número de procesos/hilos a utilizar (por defecto -1 usa todos los núcleos).
+      backend: Backend a utilizar ("loky" para procesos o "threading" para hilos).
+    
+    Uso:
+      @parallelize(n_jobs=-1)
+      def mi_funcion(x):
+          ... 
+    Luego se puede llamar a mi_funcion(lista_de_valores) y se devolverá una lista con los resultados.
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(args_list, *args, **kwargs):
+            return Parallel(n_jobs=n_jobs, backend=backend)(
+                delayed(func)(arg, *args, **kwargs) for arg in args_list
+            )
+        return wrapper
+    return decorator
 
 
 def load_config() -> dict[str, any]:

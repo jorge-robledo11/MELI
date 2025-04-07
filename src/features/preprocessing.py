@@ -3,7 +3,10 @@ from src.utils.preprocessors import *
 
 import polars as pl
 from sklearn.pipeline import Pipeline
+from src.utils.utils_fn import parallelize
 
+
+@parallelize(backend='loky')
 def preprocessing(
     data: list, 
     lvl_id: str, 
